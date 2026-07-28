@@ -1,0 +1,200 @@
+using System;
+
+// Interface for salary calculation
+interface ISalary
+{
+    double CalculateSalary();
+}
+
+// Base Class
+class Employee
+{
+    // Protected data members
+    protected int employeeId;
+    protected string employeeName;
+    protected string department;
+
+    // Constructor
+    public Employee(int id, string name, string dept)
+    {
+        employeeId = id;
+        employeeName = name;
+        department = dept;
+    }
+
+    // Virtual method (Runtime Polymorphism)
+    public virtual void DisplayEmployee()
+    {
+        Console.WriteLine("Employee ID      : " + employeeId);
+        Console.WriteLine("Employee Name    : " + employeeName);
+        Console.WriteLine("Department       : " + department);
+    }
+}
+
+// Derived Class - Full Time Employee
+class FullTimeEmployee : Employee, ISalary
+{
+    // Private data members
+    private double basicSalary;
+    private double hra;
+    private double da;
+    private double bonus;
+    private double pf;
+    private double tax;
+
+    // Constructor
+    public FullTimeEmployee(int id, string name, string dept, double salary)
+        : base(id, name, dept)
+    {
+        basicSalary = salary;
+
+        // Salary Components
+        hra = basicSalary * 0.20;
+        da = basicSalary * 0.10;
+        bonus = basicSalary * 0.05;
+        pf = basicSalary * 0.12;
+        tax = basicSalary * 0.08;
+    }
+
+    // Interface Method
+    public double CalculateSalary()
+    {
+        return basicSalary + hra + da + bonus - pf - tax;
+    }
+
+    // Method Overriding
+    public override void DisplayEmployee()
+    {
+        Console.WriteLine("\n==============================================");
+        Console.WriteLine("          FULL TIME EMPLOYEE REPORT");
+        Console.WriteLine("==============================================");
+
+        base.DisplayEmployee();
+
+        Console.WriteLine("----------------------------------------------");
+        Console.WriteLine("Basic Salary    : Rs. " + basicSalary);
+        Console.WriteLine("HRA (20%)       : Rs. " + hra);
+        Console.WriteLine("DA (10%)        : Rs. " + da);
+        Console.WriteLine("Bonus (5%)      : Rs. " + bonus);
+        Console.WriteLine("PF (12%)        : Rs. " + pf);
+        Console.WriteLine("Tax (8%)        : Rs. " + tax);
+        Console.WriteLine("----------------------------------------------");
+        Console.WriteLine("Net Salary      : Rs. " + CalculateSalary());
+        Console.WriteLine("==============================================");
+    }
+}
+// Derived Class - Part Time Employee
+class PartTimeEmployee : Employee, ISalary
+{
+    // Private data members
+    private int hoursWorked;
+    private double ratePerHour;
+
+    // Constructor
+    public PartTimeEmployee(int id, string name, string dept, int hours, double rate)
+        : base(id, name, dept)
+    {
+        hoursWorked = hours;
+        ratePerHour = rate;
+    }
+
+    // Interface Method
+    public double CalculateSalary()
+    {
+        return hoursWorked * ratePerHour;
+    }
+
+    // Method Overriding
+    public override void DisplayEmployee()
+    {
+        Console.WriteLine("\n==============================================");
+        Console.WriteLine("          PART TIME EMPLOYEE REPORT");
+        Console.WriteLine("==============================================");
+
+        base.DisplayEmployee();
+
+        Console.WriteLine("----------------------------------------------");
+        Console.WriteLine("Hours Worked   : " + hoursWorked);
+        Console.WriteLine("Rate Per Hour  : Rs. " + ratePerHour);
+        Console.WriteLine("----------------------------------------------");
+        Console.WriteLine("Net Salary     : Rs. " + CalculateSalary());
+        Console.WriteLine("==============================================");
+    }
+}
+
+// Main Class
+class Program
+{
+    static void Main(string[] args)
+    {
+        Employee employee;
+
+        Console.WriteLine("====================================================");
+        Console.WriteLine("          MARWADI UNIVERSITY");
+        Console.WriteLine("         EMPLOYEE PAYROLL SYSTEM");
+        Console.WriteLine("====================================================");
+
+        // Accept Employee Details
+        Console.Write("\nEnter Employee ID      : ");
+        int id = Convert.ToInt32(Console.ReadLine());
+
+        Console.Write("Enter Employee Name    : ");
+        string name = Console.ReadLine();
+
+        Console.Write("Enter Department       : ");
+        string department = Console.ReadLine();
+
+        Console.WriteLine("\nSelect Employee Type");
+        Console.WriteLine("1. Full Time Employee");
+        Console.WriteLine("2. Part Time Employee");
+
+        Console.Write("\nEnter Choice : ");
+        int choice = Convert.ToInt32(Console.ReadLine());
+
+        switch (choice)
+        {
+            case 1:
+
+                Console.Write("Enter Basic Salary : ");
+                double salary = Convert.ToDouble(Console.ReadLine());
+
+                employee = new FullTimeEmployee(id, name, department, salary);
+                break;
+
+            case 2:
+
+                Console.Write("Enter Hours Worked : ");
+                int hours = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Enter Rate Per Hour : ");
+                double rate = Convert.ToDouble(Console.ReadLine());
+
+                employee = new PartTimeEmployee(id, name, department, hours, rate);
+                break;
+
+            default:
+
+                Console.WriteLine("\nInvalid Employee Type.");
+                Console.WriteLine("Program Terminated.");
+                return;
+        }
+
+        Console.Clear();
+
+        Console.WriteLine("====================================================");
+        Console.WriteLine("             EMPLOYEE PAYROLL REPORT");
+        Console.WriteLine("====================================================");
+        Console.WriteLine("Report Date : " + DateTime.Now.ToShortDateString());
+
+        // Runtime Polymorphism
+        employee.DisplayEmployee();
+
+        Console.WriteLine("\nPayroll Status : Generated Successfully");
+        Console.WriteLine("====================================================");
+
+        Console.WriteLine("\nThank You...");
+        Console.WriteLine("Press any key to exit.");
+
+        Console.ReadKey();
+    }
+}
