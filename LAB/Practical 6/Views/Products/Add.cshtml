@@ -1,0 +1,224 @@
+﻿@model lab_6.Models.Product
+
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f5f7;
+        }
+
+        .navbar {
+            background: #173f5f;
+            color: white;
+            padding: 15px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 9px 15px;
+            margin-left: 7px;
+            border-radius: 4px;
+        }
+
+        .home {
+            background: #286090;
+        }
+
+        .add {
+            background: #198754;
+        }
+
+        .container {
+            width: 650px;
+            max-width: 92%;
+            margin: 45px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px #ccc;
+        }
+
+        h1 {
+            color: #24527a;
+            margin-top: 0;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .button {
+            padding: 10px 18px;
+            background: #198754;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cancel {
+            display: inline-block;
+            padding: 9px 17px;
+            margin-left: 7px;
+            background: #24527a;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="logo">
+            Product Catalog
+        </div>
+
+        <div class="nav">
+            <a class="home"
+               href="@Url.Action("Index", "Products")">
+                Home
+            </a>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>Add New Product</h1>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="error">
+                    @ViewBag.Message
+                </div>
+            }
+
+            <form asp-controller="Products"
+                  asp-action="Add"
+                  method="post">
+
+                <div class="field">
+                    <label>Product Name</label>
+
+                    <input type="text"
+                           name="Name"
+                           value="@Model?.Name"
+                           placeholder="Enter product name"
+                           required />
+                </div>
+
+                <div class="field">
+                    <label>Description</label>
+
+                    <textarea name="Description"
+                              placeholder="Enter product description"
+                              required>@Model?.Description</textarea>
+                </div>
+
+                <div class="field">
+                    <label>Price</label>
+
+                    <input type="number"
+                           name="Price"
+                           value="@Model?.Price"
+                           min="1"
+                           placeholder="Enter price"
+                           required />
+                </div>
+
+                <div class="field">
+                    <label>Category</label>
+
+                    <select name="Category" required>
+
+                        <option value="">
+                            -- Select Category --
+                        </option>
+
+                        <option value="Laptop">
+                            Laptop
+                        </option>
+
+                        <option value="Mobile">
+                            Mobile
+                        </option>
+
+                        <option value="Headphones">
+                            Headphones
+                        </option>
+
+                    </select>
+                </div>
+
+                <button type="submit" class="button">
+                    Add Product
+                </button>
+
+                <a class="cancel"
+                   href="@Url.Action("Index", "Products")">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
