@@ -1,0 +1,26 @@
+﻿@model lab_7.Models.Feedback
+
+<div class="card" style="margin-bottom:15px;">
+
+    <h3 style="color:#24527a;">
+        @Model.Name
+    </h3>
+
+    <p>
+        <b>Category:</b> @Model.Category
+    </p>
+
+    <p>
+        <b>Rating:</b> @Model.Rating / 5
+    </p>
+
+    <p>
+        <b>Comment:</b> @Model.Comment
+    </p>
+
+    <small>
+        Submitted on:
+        @Model.SubmittedOn.ToString("dd-MM-yyyy")
+    </small>
+
+</div>

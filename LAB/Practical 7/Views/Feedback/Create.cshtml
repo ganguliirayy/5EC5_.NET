@@ -1,0 +1,202 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model lab_7.Models.Feedback
+
+@{
+    ViewData["Title"] = "Give Feedback";
+}
+
+<div class="card">
+
+    <h1 style="color:#24527a;">
+        Give Your Feedback
+    </h1>
+
+    @using (Html.BeginForm("Create", "Feedback",
+        FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(
+        false,
+        "Please correct the following errors.",
+        new { @class = "error" }
+        )
+
+    <div style="margin-bottom:15px;">
+        @Html.LabelFor(m => m.Name)
+
+        <br />
+
+        @Html.TextBoxFor(
+                m => m.Name,
+                new
+                {
+                    style = "width:100%;padding:9px;",
+                    placeholder = "Enter your name"
+                }
+                )
+
+        @Html.ValidationMessageFor(
+                m => m.Name,
+                "",
+                new { @class = "error" }
+                )
+    </div>
+
+    <div style="margin-bottom:15px;">
+        @Html.LabelFor(m => m.Email)
+
+        <br />
+
+        @Html.TextBoxFor(
+                m => m.Email,
+                new
+                {
+                    style = "width:100%;padding:9px;",
+                    placeholder = "Enter your email"
+                }
+                )
+
+        @Html.ValidationMessageFor(
+                m => m.Email,
+                "",
+                new { @class = "error" }
+                )
+    </div>
+
+    <div style="margin-bottom:15px;">
+        @Html.LabelFor(m => m.Category)
+
+        <br />
+
+        @Html.DropDownListFor(
+                m => m.Category,
+                new List<SelectListItem>
+                {
+                new SelectListItem
+                {
+                Text = "-- Select Category --",
+                Value = ""
+                },
+                new SelectListItem
+                {
+                Text = "Website",
+                Value = "Website"
+                },
+                new SelectListItem
+                {
+                Text = "Service",
+                Value = "Service"
+                },
+                new SelectListItem
+                {
+                Text = "Support",
+                Value = "Support"
+                }
+                },
+                new
+                {
+                    style = "width:100%;padding:9px;"
+                }
+                )
+
+        @Html.ValidationMessageFor(
+                m => m.Category,
+                "",
+                new { @class = "error" }
+                )
+    </div>
+
+    <div style="margin-bottom:15px;">
+        @Html.LabelFor(m => m.Rating)
+
+        <br />
+
+        @Html.DropDownListFor(
+                m => m.Rating,
+                new List<SelectListItem>
+                {
+                new SelectListItem
+                {
+                Text = "-- Select Rating --",
+                Value = "0"
+                },
+                new SelectListItem
+                {
+                Text = "1 - Poor",
+                Value = "1"
+                },
+                new SelectListItem
+                {
+                Text = "2 - Fair",
+                Value = "2"
+                },
+                new SelectListItem
+                {
+                Text = "3 - Good",
+                Value = "3"
+                },
+                new SelectListItem
+                {
+                Text = "4 - Very Good",
+                Value = "4"
+                },
+                new SelectListItem
+                {
+                Text = "5 - Excellent",
+                Value = "5"
+                }
+                },
+                new
+                {
+                    style = "width:100%;padding:9px;"
+                }
+                )
+
+        @Html.ValidationMessageFor(
+                m => m.Rating,
+                "",
+                new { @class = "error" }
+                )
+    </div>
+
+    <div style="margin-bottom:15px;">
+        @Html.LabelFor(m => m.Comment)
+
+        <br />
+
+        @Html.TextAreaFor(
+                m => m.Comment,
+                new
+                {
+                    style = "width:100%;height:110px;padding:9px;",
+                    placeholder = "Write your feedback"
+                }
+                )
+
+        @Html.ValidationMessageFor(
+                m => m.Comment,
+                "",
+                new { @class = "error" }
+                )
+    </div>
+
+    <button type="submit"
+            class="button">
+        Submit Feedback
+    </button>
+
+    @Html.ActionLink(
+        "Cancel",
+        "Index",
+        "Feedback",
+        null,
+        new
+        {
+            @class = "button",
+            style = "margin-left:8px;"
+        }
+        )
+        }
+
+</div>
